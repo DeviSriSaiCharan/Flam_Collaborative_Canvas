@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Realtime Canvas — Drawing (Phase 2)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="text-gray-800 flex flex-col min-h-screen p-4">
+  <header class="flex items-center justify-between w-full max-w-6xl mx-auto mb-4">
+    <h1 class="text-xl font-semibold">🎨 Real-Time Canvas — Basic Drawing</h1>
+    <span id="status" class="text-sm text-gray-600">Connected</span>
+  </header>
+
+  <!-- MAIN SECTION -->
+  <main class="flex flex-1 w-full max-w-6xl mx-auto gap-4">
+    <!-- LEFT CONTROL PANEL -->
+    <div class="w-1/4 p-4 rounded-lg flex flex-col space-y-4 border bg-zinc-100 shadow shadow-md">
+      <div class="flex flex-wrap items-center gap-4">
+        <input type="color" id="colorPicker" value="#111111" class="border rounded w-16 h-10" />
+        <input type="range" id="widthSlider" min="1" max="20" value="3" class="w-full" />
+      </div>
+      <button id="btnClearLocal"
+        class="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
+        Clear
+      </button>
+      <small class="text-gray-700">Draw locally — sync comes next phase</small>
+      <div class="w-full h-full">
+          <h2 class="text-lg font-semibold" >Users</h2>
+          <ul class="text-black" id="userList">
+            
+          </ul>
+      </div>
+    </div>
+
+    <!-- RIGHT FULL-SIZE CANVAS -->
+    <div class="flex-1 ounded-lg overflow-hidden">
+      <canvas id="drawCanvas" class=" border border-gray-300 rounded-lg shadow-md cursor-crosshair"></canvas>
+    </div>
+  </main>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/client.js"></script>
+</body>
+</html>
