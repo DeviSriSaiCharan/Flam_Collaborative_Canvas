@@ -16,7 +16,12 @@ io.on("connection", (socket) => {
     const forwarded = socket.handshake.headers["x-forwarded-for"];
     const ip = Array.isArray(forwarded) ? forwarded[0] : forwarded || socket.handshake.address;
 
-    const geo = geoip.lookup(ip!);
+    let clientIP: string | undefined;
+    if (ip) {
+        clientIP = ip.split(",")[0]?.trim();
+    }
+
+    const geo = geoip.lookup(clientIP!);
 
     console.log("--------------------------------------------------");
     console.log(`🗺️  New user connected: ${socket.id}`);
