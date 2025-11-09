@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import { onDraw, onJoinRoom, type UserInfo, onClear, onDrawComplete, onUndo, onRedo, leaveRoom } from "./rooms.js";
+import geoip from "geoip-lite";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -12,7 +13,15 @@ const io = new Server(httpServer, {
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
-    console.log("A user connected:", socket.id);
+    const forwarded = socket.handshake.headers["x-forwarded-for"];
+    const ip = Array.isArray(forwarded) ? forwarded[0] : forwarded || socket.handshake.address;
+
+    const geo = geoip.lookup(ip!);
+
+    console.log("--------------------------------------------------");
+    console.log(`🗺️  New user connected: ${socket.id}`);
+    console.log(`🌍  IP: ${ip}`);
+    console.log(`📍  Location: ${geo?.city}, ${geo?.region}, ${geo?.country}`);
 
     // Handle join room
     socket.on('joinRoom', ({room}) => (onJoinRoom(room, socket)) );
