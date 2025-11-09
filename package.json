@@ -6,9 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./server/server.ts",
-    "build": "tsc",
-    "serve": "node dist/server/server.js"
+    "start": "node dist/server/server.js",
+    "build": "tsc && cp -r public dist/public"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +25,7 @@
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.0",
     "@types/socket.io": "^3.0.2",
+    "copyfiles": "^2.4.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
